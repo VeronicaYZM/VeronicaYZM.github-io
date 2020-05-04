@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>spider on VeronicaYZM</title>
-    <link>VeronicaYZM.github.io/tags/spider/</link>
+    <link>https://VeronicaYZM.github.io/tags/spider/</link>
     <description>Recent content in spider on VeronicaYZM</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright © 2008–2019, Steve Francia and the Hugo Authors; all rights reserved.</copyright>
     <lastBuildDate>Wed, 29 Apr 2020 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="VeronicaYZM.github.io/tags/spider/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://VeronicaYZM.github.io/tags/spider/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>正则表达式(1)</title>
-      <link>VeronicaYZM.github.io/blog/zhengze/</link>
+      <link>https://VeronicaYZM.github.io/blog/zhengze/</link>
       <pubDate>Wed, 29 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>VeronicaYZM.github.io/blog/zhengze/</guid>
+      <guid>https://VeronicaYZM.github.io/blog/zhengze/</guid>
       <description>正则表达式(1)  特殊字符：    ^ :以某个字符串开头 例如 + :至少出现一次 . :点后面的任意字符（一个字符） * :前面的字符出现任意多次 例子：“^b.”:b开头中间出现的任意字符，中间字符出现任意多次 的字符串 使用re.match(条件,目标字符串)进行匹配。 $ :以$前面的字符结尾 ? :非贪婪匹配，默认情况下(.*)匹配字符串是贪婪匹配即默认开始一直匹配到最右边 （从右边开始匹配第一个符合要求字符串），而非贪婪匹配时从左开始匹配第一个符合要求的字符串这样就行了 (.*?)    例子：string =.*(b.*b).* 提取括号里面的东西string.group(1)这里是第一个括号里面的匹配结构(这里只有一个括号，所以你写.group（2）会报错)  {n，m}：表示数字至少出现n次最多出现m次 例子：string =.*(b.{n,m}b).*表示两个b之间的任意字符最少出现n，最多出现m次数的字符串 | ：或关系 [] : (1)只要满足中括号里面的任意一个字符 (2)[0-9]{9}:这个表示的意思是在0到9之间的任意九位字符 (3)[^1]{9}:这里的意思时不包含1字符的九位字符    例子：string =[abcdk]ora ,表示中括号里的任意字符组合后面的括号外 字符（普通字符）（这里要注意[.*]这个例子里面.和*就仅仅是字符）  \s:空格 \S:不为空格 \w:任意字符，类似[A-Za-z0-9_]但不包含空格 \W:和\w相反，不包含\w里面的包含的任意一个字符，因此这里可以查阅空格    例子：string =“b\sb”：两个b之间有一个空格的字符串string =“b\Sb”：两个b之间有一个非空格的字符串(注意：双b之间只有一个字符)  [\u4E00-\u9FA5] : 需要提取的一个汉字，你想提取多个的后面加一个+就行了 \d:代表数字的意思   </description>
     </item>
     

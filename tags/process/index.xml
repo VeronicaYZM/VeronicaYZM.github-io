@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>process on VeronicaYZM</title>
-    <link>VeronicaYZM.github.io/tags/process/</link>
+    <link>https://VeronicaYZM.github.io/tags/process/</link>
     <description>Recent content in process on VeronicaYZM</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright © 2008–2019, Steve Francia and the Hugo Authors; all rights reserved.</copyright>
     
-	<atom:link href="VeronicaYZM.github.io/tags/process/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://VeronicaYZM.github.io/tags/process/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>线程与进程(1)</title>
-      <link>VeronicaYZM.github.io/blog/thread_python/</link>
+      <link>https://VeronicaYZM.github.io/blog/thread_python/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>VeronicaYZM.github.io/blog/thread_python/</guid>
+      <guid>https://VeronicaYZM.github.io/blog/thread_python/</guid>
       <description>多线程与多进程(1)   gil:    gil global interpreter lock (cpython)全局解释器锁 这个玩意其实本质上算是一个阻止多进程并发，为了“thread-safe”，确保同一时刻只有一个线程在CPU上执行一个字节码,类似bug一般的存在，局限性很大，遇见IO操作主动释放，也会根据执行字节码行数，时间来释放 这里推荐一个大佬的博客,解释的很详细 博客链接     多线程的两种编程方式：   (1)通过thread类实例化，适用于代码量较小情况
   thread1 = threading.Thread(target=Function，arg=(res,))  (2) 通过继承thread类来实现多线程
    3.线程同步：
