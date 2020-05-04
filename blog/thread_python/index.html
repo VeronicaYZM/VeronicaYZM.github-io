@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="一些随笔">
+    <meta name="Author" content="VeronicaYZM">
+    <meta name="keywords" content="hugo blog">
+    <link rel="stylesheet" href=VeronicaYZM.github.io/css/syntax.css>
+    <link rel="stylesheet" href=VeronicaYZM.github.io/css/style.css>
+    <script src="https://kit.fontawesome.com/1b7478c139.js" crossorigin="anonymous"></script>
+    <title>VeronicaYZM</title>
+  </head><body><aside id="sidenav">
+    <header>
+    
+        <a href=VeronicaYZM.github.io><img src="VeronicaYZM.github.io/headpic.jpg" alt="YZM博客"></a>
+        
+    
+
+    <a id="branding" href=VeronicaYZM.github.io>
+        
+            VeronicaYZM
+        
+    </a>
+    </header>
+
+    <nav>
+        
+            		
+            <a href="VeronicaYZM.github.io/"
+                
+            >
+                <i class="fas fa-home fa-sm"></i>
+                <span>home</span>
+            </a>
+        
+            		
+            <a href="VeronicaYZM.github.io/blog/"
+                
+            >
+                <i class="fas fa-keyboard fa-ms"></i>
+                <span>blog</span>
+            </a>
+        
+            		
+            <a href="VeronicaYZM.github.io/tags"
+                
+            >
+                <i class="fas fa-tags fa-ms"></i>
+                <span>tags</span>
+            </a>
+        
+            		
+            <a href="https://github.com/yourgithubusername23434"
+                
+                    target="_blanck"
+                
+            >
+                <i class="fab fa-github fa-ms"></i>
+                <span>github</span>
+            </a>
+        
+            		
+            <a href="VeronicaYZM.github.io/index.xml"
+                
+            >
+                <i class="fas fa-rss fa-ms"></i>
+                <span>RSS</span>
+            </a>
+        
+            		
+            <a href="VeronicaYZM.github.io/contact"
+                
+            >
+                <i class="far fa-envelope"></i>
+                <span>contact</span>
+            </a>
+        
+</aside>
+<main id="main">
+            <a href="javascript:void(0)" id="closebtn" onclick="navToggle()"><i class="fas fa-bars fa-lg"></i></a>
+            <div class="content">
+    
+    <h1 id="title">线程与进程(1)</h1>
+    
+      
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#多线程与多进程1">多线程与多进程(1)</a></li>
+  </ul>
+</nav>
+    <h2 id="多线程与多进程1">多线程与多进程(1)</h2>
+<blockquote>
+<ol>
+<li>gil:</li>
+</ol>
+<blockquote>
+<ul>
+<li>gil global interpreter lock (cpython)全局解释器锁</li>
+<li>这个玩意其实本质上算是一个阻止多进程并发，为了“thread-safe”，确保同一时刻只有一个线程在CPU上执行一个字节码,类似bug一般的存在，局限性很大，遇见IO操作主动释放，也会根据执行字节码行数，时间来释放</li>
+<li>这里推荐一个大佬的博客,解释的很详细 <a href="http://cenalulu.github.io/python/gil-in-python/">博客链接</a></li>
+</ul>
+</blockquote>
+</blockquote>
+<blockquote>
+<ol start="2">
+<li>多线程的两种编程方式：</li>
+</ol>
+<blockquote>
+<p>(1)通过thread类实例化，适用于代码量较小情况</p>
+</blockquote>
+</blockquote>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">thread1</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">Function</span><span class="err">，</span>
+<span class="n">arg</span><span class="o">=</span><span class="p">(</span><span class="n">res</span><span class="p">,))</span>
+</code></pre></div><blockquote>
+<blockquote>
+<p>(2) 通过继承thread类来实现多线程</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>3.线程同步：</p>
+<blockquote>
+<ul>
+<li>一个线程运行，其他线程排队等待，直到该线程运行完成</li>
+<li>线程同步使用到的模块：</li>
+</ul>
+<blockquote>
+<ul>
+<li>(1)thread模块的Lock():</li>
+</ul>
+<blockquote>
+<blockquote>
+<p>互斥锁&ndash;最为低级的同步指令。这个锁作用是可以让这两个线程交替运行,但是锁同样会影响系统性能且容易引起死锁
+代码示例：</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">lock</span><span class="p">):</span>
+    <span class="k">global</span>  <span class="n">total</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="mi">1000000</span><span class="p">):</span>
+        <span class="n">lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+        <span class="n">total</span><span class="o">+=</span><span class="mi">1</span>
+        <span class="n">lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="n">lock</span><span class="p">):</span>
+    <span class="k">global</span> <span class="n">total</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span>  <span class="nb">range</span> <span class="p">(</span><span class="mi">1000000</span><span class="p">):</span>
+        <span class="n">lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+        <span class="n">total</span><span class="o">-=</span><span class="mi">1</span>
+        <span class="n">lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">lock</span> <span class="o">=</span><span class="n">Lock</span><span class="p">()</span>
+    <span class="n">thread_1</span> <span class="o">=</span><span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">add</span><span class="p">,</span><span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">lock</span><span class="p">,))</span>
+    <span class="n">thread_2</span> <span class="o">=</span><span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">desc</span><span class="p">,</span><span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">lock</span><span class="p">,))</span>
+    <span class="n">thread_1</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">thread_2</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">thread_1</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+    <span class="n">thread_2</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">total</span><span class="p">)</span>
+</code></pre></div><p>acquire([timeout]): 使线程进入同步阻塞状态，尝试获得锁定。
+release(): 释放锁。使用前线程必须已获得锁定，否则将抛出异常
+Lock()只能被同一线程请求一次</p>
+<blockquote>
+<p>(2)thread模块的RLock():</p>
+<blockquote>
+<ul>
+<li>可重入锁&ndash;能够被同一线程请求多次，但是acquire和release的个数必须相同</li>
+</ul>
+</blockquote>
+</blockquote>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="n">lock</span><span class="p">):</span>
+    <span class="k">global</span> <span class="n">total</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span>  <span class="nb">range</span> <span class="p">(</span><span class="mi">1000000</span><span class="p">):</span>
+        <span class="n">lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+        <span class="n">lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+        <span class="n">total</span><span class="o">-=</span><span class="mi">1</span>
+        <span class="n">lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+        <span class="n">lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+</code></pre></div><p>关于lock和rlock的更好的示例 <a href="https://blog.csdn.net/brucewong0516/article/details/81050939">推荐博客</a></p>
+<blockquote>
+<p>(3)Condition:</p>
+<ul>
+<li>针对复杂的问题，互斥锁可能无法处理的情况，使用condition条件变量不仅有acquire和release方法还有wait和notify方法(以网上经典的ai通过condition完成协同读诗为例)</li>
+</ul>
+<blockquote>
+<ul>
+<li>(1).notifyAll(): 调用这个方法将通知等待池中所有的线程，这些线程都将进入锁定池尝试获得锁定。调用这个方法不会释放锁定。使用前线程必须已获得锁定，否则将抛出异常。</li>
+<li>(2).wait([timeout]): 调用这个方法将使线程进入Condition的等待池等待通知，并释放锁。使用前线程必须已获得锁定，否则将抛出异常。</li>
+<li>(3).notify(): 调用这个方法将从等待池挑选一个线程并通知，收到通知的线程将自动调用acquire()尝试获得锁定（进入锁定池）；其他线程仍然在等待池中。调用这个方法不会释放锁定。使用前线程必须已获得锁定，否则将抛出异常。</li>
+<li>(4).acquire([timeout])/release(): 调用关联的锁的相应方法。</li>
+</ul>
+</blockquote>
+</blockquote>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">XiaoAi</span><span class="p">(</span><span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">condition</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&#34;小爱&#34;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">condition</span> <span class="o">=</span><span class="n">condition</span>
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">condition</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">condition</span><span class="o">.</span><span class="n">notify</span><span class="p">()</span>
+            <span class="k">print</span><span class="p">(</span><span class="s2">&#34;{}:作咩啊&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">condition</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+
+            <span class="k">print</span><span class="p">(</span><span class="s2">&#34;{}:好啊,来啊&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">condition</span><span class="o">.</span><span class="n">notify</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">condition</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+
+            <span class="k">print</span><span class="p">(</span><span class="s2">&#34;{}:有爱你就来&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">condition</span><span class="o">.</span><span class="n">notify</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">condition</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+
+            <span class="k">print</span><span class="p">(</span><span class="s2">&#34;{}:我技术超级赞&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">condition</span><span class="o">.</span><span class="n">notify</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">condition</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+
+            <span class="k">print</span><span class="p">(</span><span class="s2">&#34;{}:逆风nmp&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">condition</span><span class="o">.</span><span class="n">notify</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">condition</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+
+            <span class="k">print</span><span class="p">(</span><span class="s2">&#34;{}:随时问候你&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">condition</span><span class="o">.</span><span class="n">notify</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">condition</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+
+
+
+<span class="k">class</span> <span class="nc">tianMao</span><span class="p">(</span><span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">condition</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&#34;天猫精灵&#34;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">condition</span> <span class="o">=</span><span class="n">condition</span>
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># with self.condition:</span>
+            <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">condition</span><span class="p">:</span>
+                <span class="k">print</span><span class="p">(</span><span class="s2">&#34;{}:小爱，小爱&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">condition</span><span class="o">.</span><span class="n">notify</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">condition</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+
+                <span class="k">print</span><span class="p">(</span><span class="s2">&#34;{}:对诗否？&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">condition</span><span class="o">.</span><span class="n">notify</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">condition</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+
+                <span class="k">print</span><span class="p">(</span><span class="s2">&#34;{}:祖安大舞台&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">condition</span><span class="o">.</span><span class="n">notify</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">condition</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+
+                <span class="k">print</span><span class="p">(</span><span class="s2">&#34;{}:别问我手速多块&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">condition</span><span class="o">.</span><span class="n">notify</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">condition</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+
+                <span class="k">print</span><span class="p">(</span><span class="s2">&#34;{}:顺风四海皆兄弟&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">condition</span><span class="o">.</span><span class="n">notify</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">condition</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+
+                <span class="k">print</span><span class="p">(</span><span class="s2">&#34;{}:手中键盘是武器&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">condition</span><span class="o">.</span><span class="n">notify</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">condition</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">lock</span> <span class="o">=</span><span class="n">threading</span><span class="o">.</span><span class="n">Condition</span><span class="p">()</span>
+    <span class="n">miao</span> <span class="o">=</span><span class="n">tianMao</span><span class="p">(</span><span class="n">lock</span><span class="p">)</span>
+    <span class="n">ai</span> <span class="o">=</span><span class="n">XiaoAi</span><span class="p">(</span><span class="n">lock</span><span class="p">)</span>
+    <span class="n">miao</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">ai</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</code></pre></div><p><del>(此代码存在缺陷)</del>
+这里需要特别注意两个线程的启动顺序
+方法里面的with方法其实就是 condition.acquire和condition.release和锁一样的性质
+condition存在两层锁，一把底层锁会在线程调用wait方法时释放，上面的锁会在
+每次调用wait时分配一把并放入condition的等待队列中，等待notify方法的唤醒</p>
+
+    
+    <div class="nav-next-prev">
+        <div class="nav-prev">
+            
+                <a class="grayed-out" href="javascript:void()"><i class="fas fa-chevron-left"></i></a>
+            
+        </div>
+        <a class="nav-top" href="#">top</i></a>
+        <div class="nav-next">
+            
+                <a href="VeronicaYZM.github.io/blog/zhengze/"><i class="fas fa-chevron-right"></i></a>
+            
+        </div>
+    </div>
+    
+
+            </div><footer>
+<div class="footer-content">
+<div class="contact-info">
+    
+        <div class="footer-mail">
+        <i class="far fa-envelope"></i> <a href="mailto:mz15651902928@gmail.com">mz15651902928@gmail.com</a> </div>
+    
+    
+    <div class="footer-phone">
+        <i class="fas fa-phone"></i> 15651902928 
+    </div>
+    
+</div>
+
+<p class="copyright meta">Copyright © 2008–2019, Steve Francia and the Hugo Authors; all rights reserved.</p>
+
+</div>
+</footer></main>
+    </body>
+    <script src=VeronicaYZM.github.io/js/navbutton.js></script>
+</html>

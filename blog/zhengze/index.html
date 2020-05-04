@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="一些随笔">
+    <meta name="Author" content="VeronicaYZM">
+    <meta name="keywords" content="hugo blog">
+    <link rel="stylesheet" href=VeronicaYZM.github.io/css/syntax.css>
+    <link rel="stylesheet" href=VeronicaYZM.github.io/css/style.css>
+    <script src="https://kit.fontawesome.com/1b7478c139.js" crossorigin="anonymous"></script>
+    <title>VeronicaYZM</title>
+  </head><body><aside id="sidenav">
+    <header>
+    
+        <a href=VeronicaYZM.github.io><img src="VeronicaYZM.github.io/headpic.jpg" alt="YZM博客"></a>
+        
+    
+
+    <a id="branding" href=VeronicaYZM.github.io>
+        
+            VeronicaYZM
+        
+    </a>
+    </header>
+
+    <nav>
+        
+            		
+            <a href="VeronicaYZM.github.io/"
+                
+            >
+                <i class="fas fa-home fa-sm"></i>
+                <span>home</span>
+            </a>
+        
+            		
+            <a href="VeronicaYZM.github.io/blog/"
+                
+            >
+                <i class="fas fa-keyboard fa-ms"></i>
+                <span>blog</span>
+            </a>
+        
+            		
+            <a href="VeronicaYZM.github.io/tags"
+                
+            >
+                <i class="fas fa-tags fa-ms"></i>
+                <span>tags</span>
+            </a>
+        
+            		
+            <a href="https://github.com/yourgithubusername23434"
+                
+                    target="_blanck"
+                
+            >
+                <i class="fab fa-github fa-ms"></i>
+                <span>github</span>
+            </a>
+        
+            		
+            <a href="VeronicaYZM.github.io/index.xml"
+                
+            >
+                <i class="fas fa-rss fa-ms"></i>
+                <span>RSS</span>
+            </a>
+        
+            		
+            <a href="VeronicaYZM.github.io/contact"
+                
+            >
+                <i class="far fa-envelope"></i>
+                <span>contact</span>
+            </a>
+        
+</aside>
+<main id="main">
+            <a href="javascript:void(0)" id="closebtn" onclick="navToggle()"><i class="fas fa-bars fa-lg"></i></a>
+            <div class="content">
+    
+    <h1 id="title">正则表达式(1)</h1>
+    
+      
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#正则表达式1">正则表达式(1)</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    <h3 id="正则表达式1">正则表达式(1)</h3>
+<ul>
+<li>特殊字符：</li>
+</ul>
+<blockquote>
+<ol>
+<li>^  :以某个字符串开头 例如</li>
+<li>+  :至少出现一次</li>
+<li>.  :点后面的任意字符（一个字符）</li>
+<li>*  :<em>前面的字符出现任意多次
+例子：“^b.</em>”:b开头中间出现的任意字符，中间字符出现任意多次  的字符串
+使用re.match(条件,目标字符串)进行匹配。</li>
+<li>$  :以$前面的字符结尾</li>
+<li>?  :非贪婪匹配，默认情况下(.*)匹配字符串是贪婪匹配即默认开始一直匹配到最右边
+<del>（从右边开始匹配第一个符合要求字符串）</del>，而非贪婪匹配时从左开始匹配第一个符合要求的字符串这样就行了 (.*?)</li>
+</ol>
+</blockquote>
+<pre><code>    例子：
+    string =.*(b.*b).*   提取括号里面的东西string.group(1)
+    这里是第一个括号里面的匹配结构
+    (这里只有一个括号，所以你写.group（2）会报错)
+</code></pre>
+<blockquote>
+<ol start="7">
+<li>{n，m}：表示数字至少出现n次最多出现m次
+例子：string =.*(b.{n,m}b).*表示两个b之间的任意字符最少出现n，最多出现m次数的字符串</li>
+<li>|  ：或关系</li>
+<li>[] : 
+(1)只要满足中括号里面的任意一个字符
+(2)[0-9]{9}:这个表示的意思是在0到9之间的任意九位字符
+(3)[^1]{9}:这里的意思时不包含1字符的九位字符</li>
+</ol>
+</blockquote>
+<pre><code>    例子：string =[abcdk]ora  ,表示中括号里的任意字符
+    组合后面的括号外 字符（普通字符）（这里要注意[.*]这个
+    例子里面.和*就仅仅是字符）
+</code></pre>
+<blockquote>
+<ol start="10">
+<li>\s:空格 \S:不为空格 \w:任意字符，类似[A-Za-z0-9_]但不包含空格 \W:和\w相反，不包含\w里面的包含的任意一个字符，因此这里可以查阅空格</li>
+</ol>
+</blockquote>
+<pre><code>    例子：
+    string =“b\sb”：两个b之间有一个空格的字符串
+    string =“b\Sb”：两个b之间有一个非空格的字符串
+    (注意：双b之间只有一个字符)
+</code></pre>
+<blockquote>
+<ol start="11">
+<li>[\u4E00-\u9FA5] : 需要提取的一个汉字，你想提取多个的后面加一个+就行了</li>
+<li>\d:代表数字的意思</li>
+</ol>
+</blockquote>
+
+    
+    <div class="nav-next-prev">
+        <div class="nav-prev">
+            
+                <a href="VeronicaYZM.github.io/blog/thread_python/"><i class="fas fa-chevron-left"></i></a>
+            
+        </div>
+        <a class="nav-top" href="#">top</i></a>
+        <div class="nav-next">
+            
+                <a class="grayed-out" href="javascript:void()"><i class="fas fa-chevron-right"></i></a>
+            
+        </div>
+    </div>
+    
+
+            </div><footer>
+<div class="footer-content">
+<div class="contact-info">
+    
+        <div class="footer-mail">
+        <i class="far fa-envelope"></i> <a href="mailto:mz15651902928@gmail.com">mz15651902928@gmail.com</a> </div>
+    
+    
+    <div class="footer-phone">
+        <i class="fas fa-phone"></i> 15651902928 
+    </div>
+    
+</div>
+
+<p class="copyright meta">Copyright © 2008–2019, Steve Francia and the Hugo Authors; all rights reserved.</p>
+
+</div>
+</footer></main>
+    </body>
+    <script src=VeronicaYZM.github.io/js/navbutton.js></script>
+</html>
